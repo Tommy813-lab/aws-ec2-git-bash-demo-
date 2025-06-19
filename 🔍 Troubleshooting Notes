@@ -3,4 +3,30 @@ SSH timeout? Check Security Group inbound rules (port 22 open)
 Permission denied? Ensure .pem file has chmod 400
 
 Apache not serving? Check status with sudo systemctl status apache2
+# Troubleshooting Notes
 
+## SSH Issues
+
+**Problem:** Permission denied (publickey)  
+**Fix:**  
+- Make sure your `.pem` key file is set to `chmod 400`  
+- Ensure you're using the correct username (`ubuntu`)  
+- Confirm EC2 instance is running and reachable via public IP  
+- Check Security Group allows inbound SSH (TCP port 22)
+
+## Apache Issues
+
+**Problem:** Site not loading  
+**Fix:**  
+- Confirm Apache is running: `sudo systemctl status apache2`  
+- Restart if needed: `sudo systemctl restart apache2`  
+- Check that port 80 is open in the Security Group  
+- Make sure your custom `index.html` is in `/var/www/html/`
+
+## File Upload Issues (Git Bash)
+
+**Problem:** Can't copy files to EC2  
+**Fix:**  
+- Use `scp` from Git Bash:  
+  ```bash
+  scp -i mykey.pem index.html ubuntu@<EC2-IP>:/tmp/
