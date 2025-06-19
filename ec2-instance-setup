@@ -1,1 +1,3 @@
 
+chmod +x install-apache.sh
+./install-apache.sh
