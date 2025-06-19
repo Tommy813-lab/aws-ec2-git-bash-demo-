@@ -1,0 +1,6 @@
+SSH timeout? Check Security Group inbound rules (port 22 open)
+
+Permission denied? Ensure .pem file has chmod 400
+
+Apache not serving? Check status with sudo systemctl status apache2
+
