@@ -1,24 +1,4 @@
-aws-ec2-git-bash-demo/
-├── README.md                    ← Your polished README file
-├── ec2-instance-setup/
-│   ├── ec2-launch-steps.txt    ← Plain text manual launch steps (optional)
-│   ├── connect-ec2.sh           ← Script to connect to EC2 with Git Bash
-├── web-server-setup/
-│   ├── install-apache.sh        ← Bash script to install Apache2 on EC2
-│   └── index.html               ← Your custom HTML page for testing
-├── screenshots/
-│   ├── ec2-launch.png           ← Screenshot of EC2 instance running
-│   ├── apache-installed.png     ← Screenshot confirming Apache install
-│   └── website-live.png         ← Screenshot of your website in browser
-└── notes/
-    └── troubleshooting.md       ← Common issues and fixes
-2. File Contents
-README.md
-Copy-paste this entire polished README:
 
-md
-Copy
-Edit
 # AWS EC2 Deployment with Git Bash
 
 ## 🧠 Project Summary
