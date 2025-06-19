@@ -1,5 +1,9 @@
-# Give execute permission to the script
-chmod +x install-apache.sh
+#!/bin/bash
+# Connect to EC2 instance using user kirab
 
-# Run the script to install and start Apache
-./install-apache.sh
+KEY="my-key"
+EC2_HOST="ec2-3-140-197-242.us-east-2.compute.amazonaws.com"
+USER="kirab"
+
+chmod 400 "$KEY"
+ssh -i "$KEY" "$USER@$EC2_HOST"
