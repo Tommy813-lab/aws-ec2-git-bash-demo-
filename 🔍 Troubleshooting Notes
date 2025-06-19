@@ -1,53 +1,30 @@
 # Troubleshooting Notes
 
-## SSH Issues
+## SSH Connection Issues
 
-**Problem:** Permission denied (publickey)  
-**Fix:**  
-- Make sure your `.pem` key file has correct permissions: `chmod 400 mykey.pem`  
-- Use the correct username (usually `ubuntu` for Ubuntu EC2)  
-- Confirm your EC2 instance is running and accessible via its public IP  
-- Check that your Security Group allows inbound SSH traffic on TCP port 22
+- **Permission denied (publickey) error:**  
+  - Run `chmod 400 my-key` to secure your private key  
+  - Ensure you’re using the correct username (`kirab`)  
+  - Confirm your EC2 hostname or IP is accurate  
+  - Verify your Security Group allows inbound SSH traffic on port 22
 
-**Problem:** SSH Timeout  
-**Fix:**  
-- Verify Security Group inbound rules have port 22 open to your IP  
-- Confirm the instance’s public IP hasn’t changed  
-- Check your internet connection and firewall settings on your local machine
+- **Connection timed out:**  
+  - Check that your Security Group inbound rules open port 22 (SSH)  
+  - Confirm the EC2 instance is running and healthy  
+  - Ensure your local firewall or network isn’t blocking outbound SSH
 
----
+## Apache Web Server Issues
 
-## Apache Issues
+- **Website not loading in browser:**  
+  - Check Apache service status with: `sudo systemctl status apache2`  
+  - Restart Apache if necessary: `sudo systemctl restart apache2`  
+  - Confirm your Security Group allows inbound HTTP traffic on port 80  
+  - Verify the `index.html` is correctly placed in `/var/www/html/`
 
-**Problem:** Website not loading or Apache not serving pages  
-**Fix:**  
-- Check Apache status: `sudo systemctl status apache2`  
-- Restart Apache: `sudo systemctl restart apache2`  
-- Confirm port 80 is open in the Security Group inbound rules  
-- Verify your website’s files (e.g., `index.html`) are located at `/var/www/html/`
+## File Upload Issues
 
----
-
-## File Upload Issues (Git Bash)
-
-**Problem:** Unable to copy files to EC2 instance  
-**Fix:**  
-- Use `scp` command to securely copy files:
-
-```bash
-scp -i mykey.pem index.html ubuntu@<EC2-PUBLIC-IP>:/tmp/
-Make sure the .pem key has the right permissions (chmod 400 mykey.pem)
-
-Replace <EC2-PUBLIC-IP> with your actual instance IP address
-
-Other Common Fixes
-Check system logs for errors: sudo journalctl -xe or tail -f /var/log/apache2/error.log
-
-If using a custom domain or DNS, verify it points to your EC2 IP
-
-Reboot the EC2 instance if necessary: sudo reboot
-
-yaml
-Copy
-Edit
+- If you cannot copy files to EC2, use SCP command:  
+  ```bash
+  scp -i my-key path/to/index.html kirab@ec2-3-140-197-242.us-east-2.compute.amazonaws.com:/tmp/
+Then SSH into EC2 and move the file:
 
