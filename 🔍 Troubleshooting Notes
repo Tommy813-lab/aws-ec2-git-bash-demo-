@@ -1,32 +1,53 @@
-SSH timeout? Check Security Group inbound rules (port 22 open)
-
-Permission denied? Ensure .pem file has chmod 400
-
-Apache not serving? Check status with sudo systemctl status apache2
 # Troubleshooting Notes
 
 ## SSH Issues
 
 **Problem:** Permission denied (publickey)  
 **Fix:**  
-- Make sure your `.pem` key file is set to `chmod 400`  
-- Ensure you're using the correct username (`ubuntu`)  
-- Confirm EC2 instance is running and reachable via public IP  
-- Check Security Group allows inbound SSH (TCP port 22)
+- Make sure your `.pem` key file has correct permissions: `chmod 400 mykey.pem`  
+- Use the correct username (usually `ubuntu` for Ubuntu EC2)  
+- Confirm your EC2 instance is running and accessible via its public IP  
+- Check that your Security Group allows inbound SSH traffic on TCP port 22
+
+**Problem:** SSH Timeout  
+**Fix:**  
+- Verify Security Group inbound rules have port 22 open to your IP  
+- Confirm the instance’s public IP hasn’t changed  
+- Check your internet connection and firewall settings on your local machine
+
+---
 
 ## Apache Issues
 
-**Problem:** Site not loading  
+**Problem:** Website not loading or Apache not serving pages  
 **Fix:**  
-- Confirm Apache is running: `sudo systemctl status apache2`  
-- Restart if needed: `sudo systemctl restart apache2`  
-- Check that port 80 is open in the Security Group  
-- Make sure your custom `index.html` is in `/var/www/html/`
+- Check Apache status: `sudo systemctl status apache2`  
+- Restart Apache: `sudo systemctl restart apache2`  
+- Confirm port 80 is open in the Security Group inbound rules  
+- Verify your website’s files (e.g., `index.html`) are located at `/var/www/html/`
+
+---
 
 ## File Upload Issues (Git Bash)
 
-**Problem:** Can't copy files to EC2  
+**Problem:** Unable to copy files to EC2 instance  
 **Fix:**  
-- Use `scp` from Git Bash:  
-  ```bash
-  scp -i mykey.pem index.html ubuntu@<EC2-IP>:/tmp/
+- Use `scp` command to securely copy files:
+
+```bash
+scp -i mykey.pem index.html ubuntu@<EC2-PUBLIC-IP>:/tmp/
+Make sure the .pem key has the right permissions (chmod 400 mykey.pem)
+
+Replace <EC2-PUBLIC-IP> with your actual instance IP address
+
+Other Common Fixes
+Check system logs for errors: sudo journalctl -xe or tail -f /var/log/apache2/error.log
+
+If using a custom domain or DNS, verify it points to your EC2 IP
+
+Reboot the EC2 instance if necessary: sudo reboot
+
+yaml
+Copy
+Edit
+
