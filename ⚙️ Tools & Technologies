@@ -1,16 +1,12 @@
-AWS EC2 (Ubuntu 22.04) — Cloud server hosting and management
+AWS EC2 (Ubuntu 22.04) — Cloud virtual machine hosting your web server
 
-Git Bash (Windows) — Command-line interface to run Linux commands on Windows
+Git Bash (Windows) — Terminal emulator to run Linux commands and SSH from Windows
 
-SSH with .pem Key — Secure remote access to EC2 instances
+WSL (Windows Subsystem for Linux) — Optional Linux environment on Windows for advanced CLI use
 
-Apache2 Web Server — Hosts your custom HTML website
+Apache2 Web Server — Hosts your static website on the EC2 instance
 
-Linux CLI — Package management, service control, and troubleshooting
+Bash Scripting — Automates server setup and deployment tasks
 
-Bash Scripting — Automates deployment and setup tasks
-
-Git & GitHub — Version control and project portfolio hosting
-
-
+Git & GitHub — Version control system and code repository hosting
 
