@@ -7,3 +7,4 @@ USER="kirab"
 
 chmod 400 "$KEY"
 ssh -i "$KEY" "$USER@$EC2_HOST"
+
