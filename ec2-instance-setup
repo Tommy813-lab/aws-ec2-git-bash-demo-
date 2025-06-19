@@ -1,3 +1,5 @@
-
+# Give execute permission to the script
 chmod +x install-apache.sh
+
+# Run the script to install and start Apache
 ./install-apache.sh
