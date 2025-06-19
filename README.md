@@ -1,29 +1,33 @@
+# AWS EC2 Deployment Using Git Bash
 
-# AWS EC2 Deployment with Git Bash
-
-## 🧠 Project Summary
-A practical demo of launching and connecting to an AWS EC2 Ubuntu instance **using only Git Bash on Windows**, installing Apache, and serving a custom website. This project proves I can manage cloud infra without relying on GUIs, critical for remote cloud support or infra ops roles.
-
----
-
-## 🚀 What I Did
-
-1. Launched EC2 instance manually via AWS Console (t2.micro, Ubuntu 22.04)
-2. Configured SSH key permissions and connected via Git Bash using `.pem` key
-3. Installed Apache2 web server and deployed a simple static website
-4. Documented setup steps, scripts, and common troubleshooting tips
-5. Captured screenshots showing EC2 status, Apache install, and live website
+## 🧠 Project Overview
+This project demonstrates how to launch an Ubuntu EC2 instance on AWS, connect to it securely via Git Bash on Windows, and deploy a simple Apache-hosted static website. It highlights hands-on infrastructure setup using only terminal tools and scripts.
 
 ---
 
-## 🛠️ Step-by-Step Instructions
+## 🚀 What This Project Covers
 
-### EC2 Launch
-- Use AWS Console: Choose Ubuntu 22.04 LTS, t2.micro free tier
-- Create new key pair or use existing `.pem` file, save securely
-- Open security group ports: TCP 22 (SSH) and 80 (HTTP)
+- EC2 instance creation via AWS Console (t2.micro, Ubuntu 22.04)
+- Secure connection from Windows using Git Bash and `.pem` key
+- Apache2 installation via Bash script
+- Static website deployment to `/var/www/html/`
+- Screenshots documenting live deployment and Apache status
+- Common troubleshooting steps included
 
-### Connect via Git Bash
-```bash
-chmod 400 mykey.pem
-ssh -i mykey.pem ubuntu@<ec2-public-ip>
+---
+
+## 📁 Project Structure
+
+aws-ec2-git-bash-demo/
+├── README.md
+├── ec2-instance-setup/
+│ └── connect-ec2.sh
+├── web-server-setup/
+│ ├── install-apache.sh
+│ └── index.html
+├── screenshots/
+│ ├── ec2-launch.png
+│ ├── apache-installed.png
+│ └── website-live.png
+└── notes/
+└── troubleshooting.md
