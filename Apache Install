@@ -1,9 +1,5 @@
-sudo apt update
-sudo apt install apache2 -y
-sudo systemctl start apache2
-sudo systemctl enable apache2
 #!/bin/bash
-# Install and start Apache2 web server
+# Install and start Apache2 web server on Ubuntu EC2
 
 echo "Updating system..."
 sudo apt update -y
@@ -18,3 +14,4 @@ echo "Enabling Apache2 to run on boot..."
 sudo systemctl enable apache2
 
 echo "Apache2 installed and running."
+
