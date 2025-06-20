@@ -1,17 +1,41 @@
+1. Connect to your EC2 instance via SSH
+bash
+Copy
+Edit
+chmod 400 /path/to/my-key.pem
+ssh -i "/path/to/my-key.pem" ec2-user@<your-public-ip>
+Replace /path/to/my-key.pem and <your-public-ip> accordingly.
 
-#!/bin/bash
-# Install and start Apache2 web server on Ubuntu EC2
+2. Update packages and install Apache
+bash
+Copy
+Edit
+sudo dnf update -y
+sudo dnf install -y httpd
+3. Start Apache service and enable it at boot
+bash
+Copy
+Edit
+sudo systemctl start httpd
+sudo systemctl enable httpd
+4. Adjust firewall and security group
+Make sure port 80 is open in your EC2 security group for HTTP traffic.
 
-echo "Updating system..."
-sudo apt update -y
+5. Deploy your static website files
+Copy your website files to Apache’s root directory:
 
-echo "Installing Apache2..."
-sudo apt install apache2 -y
+bash
+Copy
+Edit
+sudo cp -r /home/ec2-user/your-website-files/* /var/www/html/
+6. Verify the web server
 
-echo "Starting Apache2..."
-sudo systemctl start apache2
 
-echo "Enabling Apache2 to run on boot..."
-sudo systemctl enable apache2
 
-echo "Apache2 installed and running."
+
+
+
+
+
+
+
