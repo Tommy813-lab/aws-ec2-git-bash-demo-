@@ -1,146 +1,64 @@
-📘 AWS EC2 + Git Bash Web Server Project
+Basic Project Overview
+What’s this project about? (e.g., deploying a Linux EC2 instance running Apache web server hosting a static website)
 
-🚀 Project Overview
+Why is it important? (e.g., learning cloud infrastructure, automation, web hosting basics)
 
-This project demonstrates how to:
+2. Instance Details
+Instance ID (i-0b31e44348661fde7)
 
-Launch an EC2 instance on AWS
+Instance type (t2.micro)
 
-Connect using Git Bash on Windows
+Public IPv4 address (3.140.197.242)
 
-Install Apache Web Server
+Public DNS (ec2-3-140-197-242.us-east-2.compute.amazonaws.com)
 
-Deploy a static website using Bash scripts
+OS/AMI (Amazon Linux 2023 or whatever you used)
 
-Designed to showcase core cloud skills like:
+Key pair used (my-key)
 
-EC2 provisioning
+3. Setup & Configuration
+How you launched the instance (console, CLI, Terraform, etc.)
 
-Secure SSH access
+Security group setup (which ports you opened? Usually TCP 22 for SSH, TCP 80 for HTTP, maybe 443 for HTTPS)
 
-Linux CLI
+How you connected to the instance (Git Bash on Windows with SSH using your key pair)
 
-Apache setup
+Commands/scripts you ran to install Apache and deploy your website
 
-GitHub usage for file deployment
+How you automated any of this with bash scripts (if applicable)
 
-🧱 Tools & Technologies
+4. Testing the Deployment
+How to test the site (open http://3.140.197.242 or http://ec2-3-140-197-242.us-east-2.compute.amazonaws.com in a browser)
 
-Tool/Tech
+Expected results (e.g., your static website loads successfully)
 
-Purpose
+Any troubleshooting tips
 
-AWS EC2
+5. Code & Scripts
+List and describe any bash scripts included in the repo
 
-Cloud virtual machine
+How to run those scripts (e.g., chmod +x setup.sh && ./setup.sh)
 
-Git Bash (Windows)
+6. Architecture Diagram (optional but highly recommended)
+A simple diagram showing your EC2 instance connected to the internet, with security groups and the flow of requests
 
-SSH + Git workflow
+7. Skills Demonstrated
+Linux commands
 
-Apache
+SSH connection
 
-Host a static website
+Apache web server installation/configuration
 
-Git + GitHub
+Bash scripting (automation)
 
-Version control + deployment
+Basic AWS management (EC2, Security Groups, Key Pairs)
 
-Bash Scripting
 
-Automate install + deploy tasks
 
-Linux CLI Tools
 
-curl, chmod, systemctl
 
-Security Groups
 
-AWS firewall configuration
 
-🛠️ Setup Instructions
 
-1. Launch EC2 Instance
 
-AMI: Amazon Linux 2023 (or Ubuntu)
 
-Instance Type: t2.micro (Free Tier)
-
-Key Pair: my-key.pem (Download and store securely)
-
-Security Group: Allow SSH (22) and HTTP (80) inbound
-
-2. Connect with Git Bash (Windows)
-
-chmod 400 /c/Users/kirab/Downloads/my-key.pem
-ssh -i "/c/Users/kirab/Downloads/my-key.pem" ubuntu@3.140.197.242
-
-Use ec2-user for Amazon Linux or ubuntu for Ubuntu
-
-3. Install Apache
-
-# Amazon Linux
-sudo yum update -y
-sudo yum install httpd -y
-
-# Ubuntu
-sudo apt update && sudo apt install apache2 -y
-
-sudo systemctl start httpd  # or apache2
-sudo systemctl enable httpd
-
-4. Deploy Website from GitHub
-
-git clone https://github.com/Tommy813-lab/aws-ec2-git-bash-demo.git
-sudo cp -r aws-ec2-git-bash-demo/web-server-setup/* /var/www/html/
-sudo chown -R ec2-user:ec2-user /var/www/html
-sudo chmod -R 755 /var/www/html
-
-5. Test in Browser
-
-Navigate to:
-
-http://3.140.197.242
-
-🧠 Troubleshooting Quick Fixes
-
-Issue
-
-Fix Command or Explanation
-
-SSH Permission Denied
-
-chmod 400 key.pem, check correct username/IP
-
-Website Not Loading
-
-Check Apache running, files in /var/www/html/
-
-curl 403/404
-
-Ensure index.html exists, restart Apache
-
-Wrong Key Used
-
-Re-launch EC2 with correct key pair
-
-Security Group blocks traffic
-
-Allow inbound ports 22 (SSH) and 80 (HTTP)
-
-📁 Project Structure
-
-aws-ec2-git-bash-demo/
-├── web-server-setup/
-│   ├── index.html
-│   ├── setup-script.sh
-│   └── readme.txt
-├── README.md
-└── 🔍 Troubleshooting Notes
-
-✅ Outcome
-
-✅ Functional Apache server on AWS EC2✅ Secure SSH connection using Git Bash✅ Static website deployed via GitHub + Bash✅ Real-world troubleshooting and Linux usage
-
-Author: Tommy813-lab  Repo: GitHub
- 
