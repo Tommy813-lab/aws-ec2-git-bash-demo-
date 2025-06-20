@@ -1,30 +1,162 @@
-# Troubleshooting Notes
+# 🔍 Troubleshooting Notes
+
+This document covers common issues encountered when setting up and managing the AWS EC2 instance, SSH connections, Apache web server, and networking configuration for this project.
+
+---
 
 ## SSH Connection Issues
 
-- **Permission denied (publickey) error:**  
-  - Run `chmod 400 my-key` to secure your private key  
-  - Ensure you’re using the correct username (`kirab`)  
-  - Confirm your EC2 hostname or IP is accurate  
-  - Verify your Security Group allows inbound SSH traffic on port 22
+### 1. Permission Denied (publickey)
 
-- **Connection timed out:**  
-  - Check that your Security Group inbound rules open port 22 (SSH)  
-  - Confirm the EC2 instance is running and healthy  
-  - Ensure your local firewall or network isn’t blocking outbound SSH
+**Symptoms:**  
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
 
-## Apache Web Server Issues
+markdown
+Copy
+Edit
 
-- **Website not loading in browser:**  
-  - Check Apache service status with: `sudo systemctl status apache2`  
-  - Restart Apache if necessary: `sudo systemctl restart apache2`  
-  - Confirm your Security Group allows inbound HTTP traffic on port 80  
-  - Verify the `index.html` is correctly placed in `/var/www/html/`
-
-## File Upload Issues
-
-- If you cannot copy files to EC2, use SCP command:  
+**Causes & Fixes:**  
+- **Wrong key path or filename:** Verify the path to your `.pem` file is correct and accessible.  
   ```bash
-  scp -i my-key path/to/index.html kirab@ec2-3-140-197-242.us-east-2.compute.amazonaws.com:/tmp/
-Then SSH into EC2 and move the file:
+  ls -l /c/Users/YourUser/Downloads/my-key.pem
+Key permissions too open: SSH requires the private key to have restrictive permissions.
+
+bash
+Copy
+Edit
+chmod 400 /path/to/my-key.pem
+Key not associated with EC2 instance: Ensure the EC2 instance was launched with the correct key pair (my-key).
+
+Wrong username: For Amazon Linux 2 or AL2023 AMIs, use ec2-user. For Ubuntu AMIs, use ubuntu.
+Example:
+
+bash
+Copy
+Edit
+ssh -i /path/to/my-key.pem ec2-user@3.140.197.242
+Check SSH verbose output: Use -v to debug connection issues.
+
+bash
+Copy
+Edit
+ssh -i /path/to/my-key.pem ec2-user@3.140.197.242 -v
+Apache Web Server Issues
+1. Apache Not Starting
+Symptoms:
+
+sudo systemctl status apache2 or httpd shows inactive or failed.
+
+Fixes:
+
+Check service status and logs:
+
+bash
+Copy
+Edit
+sudo systemctl status httpd
+sudo journalctl -xe
+Make sure no other service is using port 80:
+
+bash
+Copy
+Edit
+sudo lsof -i :80
+Install Apache properly:
+
+bash
+Copy
+Edit
+sudo yum install httpd -y  # Amazon Linux / AL2023
+sudo apt install apache2 -y  # Ubuntu
+Enable and start service:
+
+bash
+Copy
+Edit
+sudo systemctl enable httpd
+sudo systemctl start httpd
+2. Webpage Not Loading
+Check AWS Security Group allows inbound on port 80 (HTTP).
+
+Verify Apache root directory has your index.html and correct permissions.
+
+Test with curl from inside the instance:
+
+bash
+Copy
+Edit
+curl http://localhost
+Network & Security Group Troubleshooting
+1. Cannot Connect to EC2 on Port 22 (SSH)
+Verify security group attached to EC2 allows inbound TCP on port 22 from your IP.
+
+Check local firewall settings on your machine.
+
+2. HTTP/HTTPS Access Issues
+Security group must allow inbound TCP on ports 80 and/or 443.
+
+Check Network ACLs in your VPC to ensure traffic is not blocked.
+
+File Permissions and Ownership
+Private key .pem files must be restricted:
+
+bash
+Copy
+Edit
+chmod 400 my-key.pem
+Apache document root files should be readable by Apache user (apache or www-data).
+
+Common Commands Reference
+bash
+Copy
+Edit
+# Connect with SSH verbose mode
+ssh -i /path/to/my-key.pem ec2-user@3.140.197.242 -v
+
+# Change key file permission
+chmod 400 /path/to/my-key.pem
+
+# Start Apache service
+sudo systemctl start httpd
+
+# Enable Apache service to start on boot
+sudo systemctl enable httpd
+
+# Check Apache status
+sudo systemctl status httpd
+
+# Check open port 80 connections
+sudo lsof -i :80
+
+# View system logs for errors
+sudo journalctl -xe
+Additional Tips
+Double-check the username for your EC2 AMI type (ec2-user, ubuntu, admin, etc.).
+
+Ensure your .pem file matches the key pair selected during instance launch.
+
+Use Elastic IPs if you want a persistent public IP instead of the auto-assigned IP that changes on reboot.
+
+IMDSv2 enabled on your instance requires updated tooling or settings for metadata queries.
+
+Keep this document updated with new issues and solutions as you work through the project.
+
+End of Troubleshooting Notes
+
+yaml
+Copy
+Edit
+
+---
+
+
+
+
+
+
+
+
+
+
+
 
