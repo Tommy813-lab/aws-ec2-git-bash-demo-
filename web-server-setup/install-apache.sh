@@ -1,41 +1,31 @@
-1. Connect to your EC2 instance via SSH
-bash
-Copy
-Edit
-chmod 400 /path/to/my-key.pem
-ssh -i "/path/to/my-key.pem" ec2-user@<your-public-ip>
-Replace /path/to/my-key.pem and <your-public-ip> accordingly.
+✅ Apache Web Server Setup 
 
-2. Update packages and install Apache
-bash
-Copy
-Edit
-sudo dnf update -y
-sudo dnf install -y httpd
-3. Start Apache service and enable it at boot
-bash
-Copy
-Edit
+sudo yum update -y     # or sudo apt update -y
+sudo yum install httpd -y     # or sudo apt install apache2 -y
 sudo systemctl start httpd
 sudo systemctl enable httpd
-4. Adjust firewall and security group
-Make sure port 80 is open in your EC2 security group for HTTP traffic.
+sudo systemctl status httpd
 
-5. Deploy your static website files
-Copy your website files to Apache’s root directory:
+Place your files in:
 
-bash
-Copy
-Edit
-sudo cp -r /home/ec2-user/your-website-files/* /var/www/html/
-6. Verify the web server
+/var/www/html/
 
+Test in browser: http://<your-ec2-ip>
 
+⚙️ Tools & Technologies Used
 
+AWS EC2 (Amazon Linux 2023) – VM for web hosting
 
+Git Bash / WSL – Terminal for running SSH and Git commands on Windows
 
+Apache Web Server – To host a static website
 
+Git + GitHub – Version control and deployment
 
+Bash scripting – Automate install and file deployment
 
+SSH – Secure shell access to remote instance
 
+Security Groups – Firewall rules on AWS
 
+curl / systemctl / chmod – Basic Linux tools for testing and troubleshooting
