@@ -1,286 +1,164 @@
-# Web Service Project - AWS EC2 Deployment Demo
+# AWS EC2 Git Bash Demo
 
-## Project Overview
+## Overview
 
-This project demonstrates launching and accessing an Amazon Linux 2023 EC2 instance on AWS, configuring it with Apache to serve a static website, and securely connecting via SSH using a private key on Windows (Git Bash).
+This project demonstrates launching and managing an Amazon EC2 instance running Linux (Amazon Linux 2023 AMI) using Git Bash on Windows. It includes securely connecting via SSH with a PEM key, automating Apache web server installation and static website deployment through bash scripts, and basic AWS infrastructure understanding.
 
----
-
-## Instance Details
-
-- **Instance ID:** i-0b31e44348661fde7  
-- **AMI:** Amazon Linux 2023 (ami-06971c49acd687c30)  
-- **Instance Type:** t2.micro  
-- **Public IP:** 3.140.197.242  
-- **Region:** us-east-2 (Ohio)  
-- **Key Pair Name:** my-key  
-- **Security Group:** launch-wizard-1 (allows SSH port 22 from my IP)  
+This hands-on project highlights practical cloud engineer skills such as Linux server management, SSH key handling, bash scripting, and AWS EC2 fundamentals.
 
 ---
 
-## Prerequisites
+## Project Goals
 
-- AWS CLI or AWS Console access to launch/manage EC2 instances  
-- Private key file (`my-key.pem`) downloaded securely  
-- Git Bash or terminal with SSH on Windows/Linux/macOS  
-
----
-
-## Connecting to the EC2 Instance via SSH
-
-1. **Set permissions on the private key file:**
-
-   ```bash
-   chmod 400 /path/to/my-key.pem
-Connect using the correct username for Amazon Linux 2023:
-
-bash
-Copy
-Edit
-ssh -i /path/to/my-key.pem ec2-user@3.140.197.242
-Expected outcome: You should get shell access to the remote instance.
-
-Setting Up Apache Web Server (on the EC2 instance)
-Once connected via SSH, run:
-
-bash
-Copy
-Edit
-sudo yum update -y
-sudo yum install -y httpd
-sudo systemctl start httpd
-sudo systemctl enable httpd
-Place your static website files in the Apache root directory:
-
-bash
-Copy
-Edit
-sudo cp /path/to/your/index.html /var/www/html/
-Verify Apache is serving the site by visiting:
-
-cpp
-Copy
-Edit
-http://3.140.197.242/
-Project Features
-Launching EC2 instance with Amazon Linux 2023 AMI
-
-SSH access using private key authentication
-
-Apache web server installation and setup via shell commands
-
-Hosting a simple static website on a live public IP
-
-Key Skills Demonstrated
-AWS EC2 instance management and configuration
-
-Secure SSH authentication with key pairs
-
-Linux system administration and package management
-
-Web server installation and static website hosting
-
-Networking and security group configuration
-
-Notes
-Ensure your local IP is allowed in the EC2 security group for SSH (port 22)
-
-Use ec2-user for Amazon Linux 2023 instances instead of ubuntu or admin
-
-Keep your private key file secure and never share publicly
-
-Author
-Tommy — Aspiring Cloud Engineer
-GitHub: https://github.com/Tommy813-lab
-
-yaml
-Copy
-Edit
-
----
-
-**This README.md covers:**
-
-- Your instance info  
-- SSH connection instructions with correct username  
-- Basic Apache web server setup  
-- Key skills recruiters look for  # Web Service Project - AWS EC2 Deployment Demo
-
-## Project Overview
-
-This project demonstrates launching and accessing an Amazon Linux 2023 EC2 instance on AWS, configuring it with Apache to serve a static website, and securely connecting via SSH using a private key on Windows (Git Bash).
-
----
-
-## Instance Details
-
-- **Instance ID:** i-0b31e44348661fde7  
-- **AMI:** Amazon Linux 2023 (ami-06971c49acd687c30)  
-- **Instance Type:** t2.micro  
-- **Public IP:** 3.140.197.242  
-- **Region:** us-east-2 (Ohio)  
-- **Key Pair Name:** my-key  
-- **Security Group:** launch-wizard-1 (allows SSH port 22 from my IP)  
+- Launch and configure a t2.micro EC2 instance on AWS with Amazon Linux 2023 AMI
+- Connect securely via SSH using Git Bash on Windows with a PEM key
+- Automate Apache web server installation and static website deployment using bash scripts
+- Validate web server availability through browser and terminal tests
+- Demonstrate use of AWS EC2 instance metadata and networking
 
 ---
 
 ## Prerequisites
 
-- AWS CLI or AWS Console access to launch/manage EC2 instances  
-- Private key file (`my-key.pem`) downloaded securely  
-- Git Bash or terminal with SSH on Windows/Linux/macOS  
+- AWS Account with EC2 launch permissions
+- PEM key file (`my-key.pem`) generated from AWS Key Pair console
+- Git Bash installed on Windows
+- Basic familiarity with Linux terminal commands and SSH
 
 ---
 
-## Connecting to the EC2 Instance via SSH
+## Architecture
 
-1. **Set permissions on the private key file:**
-
-   ```bash
-   chmod 400 /path/to/my-key.pem
-Connect using the correct username for Amazon Linux 2023:
-
-bash
-Copy
-Edit
-ssh -i /path/to/my-key.pem ec2-user@3.140.197.242
-Expected outcome: You should get shell access to the remote instance.
-
-Setting Up Apache Web Server (on the EC2 instance)
-Once connected via SSH, run:
-
-bash
-Copy
-Edit
-sudo yum update -y
-sudo yum install -y httpd
-sudo systemctl start httpd
-sudo systemctl enable httpd
-Place your static website files in the Apache root directory:
-
-bash
-Copy
-Edit
-sudo cp /path/to/your/index.html /var/www/html/
-Verify Apache is serving the site by visiting:
-
-cpp
-Copy
-Edit
-http://3.140.197.242/
-Project Features
-Launching EC2 instance with Amazon Linux 2023 AMI
-
-SSH access using private key authentication
-
-Apache web server installation and setup via shell commands
-
-Hosting a simple static website on a live public IP
-
-Key Skills Demonstrated
-AWS EC2 instance management and configuration
-
-Secure SSH authentication with key pairs
-
-Linux system administration and package management
-
-Web server installation and static website hosting
-
-Networking and security group configuration
-
-Notes
-Ensure your local IP is allowed in the EC2 security group for SSH (port 22)
-
-Use ec2-user for Amazon Linux 2023 instances instead of ubuntu or admin
-
-Keep your private key file secure and never share publicly
-
-Author
-Tommy — Aspiring Cloud Engineer
-GitHub: https://github.com/Tommy813-lab
+[Your ASCII or link to diagram here, e.g. Excalidraw or draw.io link]
 
 yaml
 Copy
 Edit
-## Step-by-Step Setup and Deployment Guide
 
-### 1. Launch EC2 Instance on AWS Console
-- Login to AWS Management Console.
-- Navigate to **EC2 > Instances > Launch Instances**.
-- Choose **AMI:** `amazon/al2023-ami-2023.7.20250609.0-kernel-6.1-x86_64` (Amazon Linux 2023).
-- Choose **Instance Type:** `t2.micro` (Free Tier eligible).
-- Configure Instance Details: Default settings are fine.
-- Add Storage: Default 8 GiB is fine.
-- Add Tags: Optional.
-- Configure Security Group:
-  - Allow inbound **SSH** on port **22** from your IP.
-  - Allow inbound **HTTP** on port **80** from anywhere (`0.0.0.0/0`).
-- Select your existing **Key Pair** named `my-key` (or create a new one and download the `.pem` file).
-- Launch the instance.
+- EC2 Instance: t2.micro, Amazon Linux 2023 AMI
+- Public IPv4: 3.140.197.242 (auto-assigned)
+- Private IPv4: 172.31.6.55
+- Security Group: Launch Wizard default allowing SSH (port 22) and HTTP (port 80)
+- Key Pair: `my-key.pem`
 
-### 2. Prepare Your SSH Key on Windows (Git Bash)
+---
 
-Open **Git Bash** and run:
+## Step-by-Step Setup Instructions
+
+### 1. Launch EC2 instance
+
+- Use AWS Management Console or CLI to launch an instance with:
+  - AMI: `amazon/al2023-ami-2023.7.20250609.0-kernel-6.1-x86_64`
+  - Instance type: `t2.micro`
+  - Key pair: `my-key`
+  - Security group allowing SSH and HTTP access
+
+### 2. Set PEM key permissions on Windows Git Bash
 
 ```bash
-# Replace the path with your PEM file location
-chmod 400 /c/Users/YourUser/Downloads/my-key.pem
-3. Connect to Your EC2 Instance
-Replace <Public-IP> below with your instance’s public IPv4 address (e.g., 3.140.197.242):
+chmod 400 /c/Users/YourUserName/Downloads/my-key.pem
+Note: Adjust path to your key location.
+
+3. Connect via SSH
+bash
+Copy
+Edit
+ssh -i "/c/Users/YourUserName/Downloads/my-key.pem" ec2-user@3.140.197.242
+Expected prompt:
 
 bash
 Copy
 Edit
-ssh -i "/c/Users/YourUser/Downloads/my-key.pem" ubuntu@<Public-IP>
-If you see Permission denied errors, check that:
-
-The PEM file path is correct.
-
-The file permissions are set to 400.
-
-4. Run Bash Scripts to Setup Apache and Deploy Website
-After SSH connection:
+[ec2-user@ip-172-31-6-55 ~]$
+4. Run automated Apache install and website deploy script
+Clone repo and navigate to script directory or download script directly:
 
 bash
 Copy
 Edit
-# Navigate to the directory with your bash scripts (if needed)
-cd ~/path-to-web-server-setup
+git clone https://github.com/Tommy813-lab/aws-ec2-git-bash-demo.git
+cd aws-ec2-git-bash-demo/web-server-setup
+chmod +x setup-apache.sh
+./setup-apache.sh
+This script will:
 
-# Make sure scripts are executable
-chmod +x install-apache.sh deploy-website.sh
+Install Apache HTTP Server (httpd)
 
-# Run Apache install script
-./install-apache.sh
+Start and enable Apache service
 
-# Run website deploy script
-./deploy-website.sh
-5. Verify Website
-Open your browser and visit:
+Deploy static website files to /var/www/html
+
+5. Verify Website Deployment
+Open a browser and navigate to:
 
 cpp
 Copy
 Edit
-http://<Public-IP>
-You should see your static website served by Apache.
+http://3.140.197.242/
+You should see your deployed static website.
 
-Architecture Diagram
-plaintext
+Or verify with curl:
+
+bash
 Copy
 Edit
-+-----------------------+        +-----------------------+
-|                       |        |                       |
-|     Your Laptop        | <----> |  EC2 Instance (Ubuntu) |
-|  (Git Bash + SSH)      |        |  Public IP: <IP>       |
-|                       |        |  Apache Web Server     |
-+-----------------------+        +-----------------------+
-                                    |
-                                    v
-                            Internet (Users access website)
-Diagram Notes:
+curl http://3.140.197.242/
+Expected output: HTML content of your static website.
 
-Your Windows PC uses Git Bash and your PEM key to SSH into the EC2 instance.
+Bash Script Summary (setup-apache.sh)
+bash
+Copy
+Edit
+#!/bin/bash
+sudo yum update -y
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo cp -r ./website/* /var/www/html/
+sudo systemctl restart httpd
+Troubleshooting Tips
+Ensure your PEM key path is correct and permissions are set to 400.
 
-EC2 instance runs Apache web server hosting the static site.
+Make sure your security group allows inbound SSH (port 22) and HTTP (port 80).
 
-Public IP allows web browsers to connect over HTTP port 80.
+Confirm instance public IP or DNS name has not changed if you stopped and restarted the instance.
+
+If connection denied: verify user is ec2-user (Amazon Linux default) or ubuntu if using Ubuntu AMI.
+
+Check Apache service status with sudo systemctl status httpd.
+
+Next Steps / Improvements
+Automate EC2 deployment using Terraform for infrastructure-as-code practice
+
+Add SSL/TLS support with Let's Encrypt for HTTPS
+
+Implement CloudWatch monitoring and alarms on EC2 metrics
+
+Create CI/CD pipeline for automated deployment updates
+
+Expand to multi-instance deployment with load balancing
+
+Contact & Links
+GitHub: https://github.com/Tommy813-lab/aws-ec2-git-bash-demo
+
+LinkedIn: [Add your LinkedIn URL here]
+
+Email: [Your professional email]
+
+License
+This project is licensed under the MIT License.
+
+Last updated: June 20, 2025
+
+yaml
+Copy
+Edit
+
+
+
+
+
+
+
+
+
