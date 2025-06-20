@@ -1,202 +1,146 @@
+📘 AWS EC2 + Git Bash Web Server Project
 
-# AWS EC2 Apache Web Server Deployment Demo
+🚀 Project Overview
 
-## Project Overview
+This project demonstrates how to:
 
-This project demonstrates how to launch an Amazon EC2 instance (Amazon Linux 2023 AMI), connect via SSH using Git Bash on Windows, automate Apache web server installation with bash scripts, and deploy a simple static website.
+Launch an EC2 instance on AWS
 
-It shows core cloud engineering skills:
-- EC2 instance launch and SSH access
-- Bash scripting automation for setup
-- Apache installation and website deployment
-- Using key pairs securely
-- Basic AWS networking and security groups
+Connect using Git Bash on Windows
 
----
+Install Apache Web Server
 
-## Project Structure
+Deploy a static website using Bash scripts
 
-aws-ec2-git-bash-demo/
-│
-├── scripts/
-│ └── setup-apache.sh # Bash script to install Apache and deploy website
-│
-├── website/
-│ ├── index.html # Static website homepage
-│ └── styles.css # Example CSS
-│
-└── README.md # This file
+Designed to showcase core cloud skills like:
 
-yaml
-Copy
-Edit
+EC2 provisioning
 
----
+Secure SSH access
 
-## Prerequisites
+Linux CLI
 
-- AWS Account with EC2 launch permissions
-- Amazon Linux 2023 AMI (ami-06971c49acd687c30) in us-east-2 (Ohio)
-- EC2 key pair created in AWS console (named `my-key.pem`)
-- Security group allowing inbound:
-  - SSH (TCP 22) from your IP
-  - HTTP (TCP 80) from anywhere (0.0.0.0/0)
-- Git Bash installed on Windows for SSH client
+Apache setup
 
----
+GitHub usage for file deployment
 
-## Launch EC2 Instance (Summary)
+🧱 Tools & Technologies
 
-- Instance type: t2.micro (free tier eligible)
-- AMI: amazon/al2023-ami-2023.7.20250609.0-kernel-6.1-x86_64
-- Key pair: my-key (downloaded `.pem` file saved locally)
-- Security Group: launch-wizard-1 (allows SSH + HTTP inbound)
-- Subnet: subnet-045209cbecc2c2dfc in us-east-2a
-- Public IPv4: e.g. `3.140.197.242`
-- Private IPv4: e.g. `172.31.6.55`
+Tool/Tech
 
----
+Purpose
 
-## Connect to EC2 Instance via SSH
+AWS EC2
 
-Open Git Bash terminal on Windows and run:
+Cloud virtual machine
 
-```bash
-chmod 400 /c/Users/YourWindowsUser/Downloads/my-key.pem
-ssh -i "/c/Users/YourWindowsUser/Downloads/my-key.pem" ec2-user@3.140.197.242
-Notes:
+Git Bash (Windows)
 
-Replace /c/Users/YourWindowsUser/Downloads/my-key.pem with your actual key file path.
+SSH + Git workflow
 
-Use ec2-user as the default user for Amazon Linux 2023 AMI.
+Apache
 
-Ensure your security group allows SSH inbound from your IP.
+Host a static website
 
-Setup Apache and Deploy Website
-Clone this repo locally:
+Git + GitHub
 
-bash
-Copy
-Edit
-git clone https://github.com/Tommy813-lab/aws-ec2-git-bash-demo.git
-cd aws-ec2-git-bash-demo
-Copy the setup-apache.sh script to your EC2 instance:
+Version control + deployment
 
-bash
-Copy
-Edit
-scp -i "/c/Users/YourWindowsUser/Downloads/my-key.pem" scripts/setup-apache.sh ec2-user@3.140.197.242:/home/ec2-user/
-SSH into your instance:
+Bash Scripting
 
-bash
-Copy
-Edit
-ssh -i "/c/Users/YourWindowsUser/Downloads/my-key.pem" ec2-user@3.140.197.242
-Make the script executable and run it:
+Automate install + deploy tasks
 
-bash
-Copy
-Edit
-chmod +x setup-apache.sh
-./setup-apache.sh
-The script will:
+Linux CLI Tools
 
-Update packages
+curl, chmod, systemctl
 
-Install Apache (httpd)
+Security Groups
 
-Start and enable Apache service
+AWS firewall configuration
 
-Copy static website files from /home/ec2-user/website (upload manually or use git)
+🛠️ Setup Instructions
 
-Set permissions
+1. Launch EC2 Instance
 
-Verify the website is running:
+AMI: Amazon Linux 2023 (or Ubuntu)
 
-Open your browser and visit:
+Instance Type: t2.micro (Free Tier)
 
-cpp
-Copy
-Edit
-http://3.140.197.242
-You should see the static website homepage.
+Key Pair: my-key.pem (Download and store securely)
 
-setup-apache.sh Script Contents (Located in scripts/ folder)
-bash
-Copy
-Edit
-#!/bin/bash
+Security Group: Allow SSH (22) and HTTP (80) inbound
 
-# Update package repositories
+2. Connect with Git Bash (Windows)
+
+chmod 400 /c/Users/kirab/Downloads/my-key.pem
+ssh -i "/c/Users/kirab/Downloads/my-key.pem" ubuntu@3.140.197.242
+
+Use ec2-user for Amazon Linux or ubuntu for Ubuntu
+
+3. Install Apache
+
+# Amazon Linux
 sudo yum update -y
+sudo yum install httpd -y
 
-# Install Apache web server
-sudo yum install -y httpd
+# Ubuntu
+sudo apt update && sudo apt install apache2 -y
 
-# Start Apache service
-sudo systemctl start httpd
-
-# Enable Apache to start on boot
+sudo systemctl start httpd  # or apache2
 sudo systemctl enable httpd
 
-# Create website directory
-sudo mkdir -p /var/www/html
+4. Deploy Website from GitHub
 
-# Copy website files from home directory (adjust if needed)
-sudo cp -r /home/ec2-user/website/* /var/www/html/
-
-# Set ownership and permissions
-sudo chown -R apache:apache /var/www/html
+git clone https://github.com/Tommy813-lab/aws-ec2-git-bash-demo.git
+sudo cp -r aws-ec2-git-bash-demo/web-server-setup/* /var/www/html/
+sudo chown -R ec2-user:ec2-user /var/www/html
 sudo chmod -R 755 /var/www/html
 
-echo "Apache installed and website deployed successfully."
-Important Security Notes
-Never commit your .pem private key to GitHub or anywhere public.
+5. Test in Browser
 
-Keep your .pem file permissions strict (chmod 400).
+Navigate to:
 
-Security group must allow SSH only from your IP, not open to the world.
+http://3.140.197.242
 
-HTTP (port 80) is open to public for website access.
+🧠 Troubleshooting Quick Fixes
 
-Troubleshooting
-Permission denied (publickey):
-Check your key path and permissions. Confirm correct user (ec2-user).
-Confirm security group inbound SSH rules.
+Issue
 
-Unable to connect:
-Check if EC2 instance is running and has public IP.
-Confirm port 22 open in security group.
+Fix Command or Explanation
 
-Apache not showing website:
-SSH to instance and check Apache status:
-sudo systemctl status httpd
-Check /var/www/html contents.
+SSH Permission Denied
 
-Useful AWS Info
-Item	Value
-Instance ID	i-0b31e44348661fde7
-Public IP	3.140.197.242
-AMI ID	ami-06971c49acd687c30
-Instance Type	t2.micro
-Security Group	sg-0aecbd3f08ad432bd (launch-wizard-1)
-VPC ID	vpc-05b94ec799e0933d5
-Subnet ID	subnet-045209cbecc2c2dfc
-Key Pair	my-key
+chmod 400 key.pem, check correct username/IP
 
-License
-This project is licensed under the MIT License.
+Website Not Loading
 
-Contact
-Tommy Bucher
-GitHub Profile
-Email: buchercharles2@gmail.com
+Check Apache running, files in /var/www/html/
 
-Last updated: June 20, 2025
+curl 403/404
 
-yaml
-Copy
-Edit
+Ensure index.html exists, restart Apache
 
----
+Wrong Key Used
 
+Re-launch EC2 with correct key pair
+
+Security Group blocks traffic
+
+Allow inbound ports 22 (SSH) and 80 (HTTP)
+
+📁 Project Structure
+
+aws-ec2-git-bash-demo/
+├── web-server-setup/
+│   ├── index.html
+│   ├── setup-script.sh
+│   └── readme.txt
+├── README.md
+└── 🔍 Troubleshooting Notes
+
+✅ Outcome
+
+✅ Functional Apache server on AWS EC2✅ Secure SSH connection using Git Bash✅ Static website deployed via GitHub + Bash✅ Real-world troubleshooting and Linux usage
+
+Author: Tommy813-lab  Repo: GitHub
+ 
