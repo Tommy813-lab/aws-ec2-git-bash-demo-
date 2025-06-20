@@ -1,233 +1,108 @@
-🚀 AWS EC2 Deployment Using Git Bash
-🧠 Project Overview
-This project shows how to launch an Ubuntu EC2 instance on AWS, connect securely via Git Bash on Windows, and deploy a static website using Apache — all from the command line. It proves basic cloud infrastructure skills with minimal tools.
+# 🚀 AWS EC2 Git Bash Demo
 
-🚀 What This Project Covers
-✅ EC2 instance creation via AWS Console (t2.micro, Ubuntu 22.04)
+This project demonstrates how to launch and configure an **Ubuntu EC2 instance on AWS**, connect to it using **Git Bash on Windows**, and deploy a basic static website hosted by **Apache** — all using terminal commands and custom Bash scripts.
 
-✅ Secure SSH connection using .pem key and Git Bash on Windows
+---
 
-✅ Apache2 web server installation via Bash script
+## 📦 What This Project Proves
 
-✅ Static HTML website deployed to /var/www/html/
+✅ You understand real-world cloud workflows  
+✅ You can automate EC2 setup and Linux provisioning  
+✅ You use Git, GitHub, Bash, and AWS together  
+✅ You can work solo with public cloud tools (no drag-and-drop BS)
 
-✅ Screenshots documenting EC2 launch and website status
+---
 
-✅ Common troubleshooting steps for SSH and Apache
+## 🧱 Architecture Diagram
 
-📁 Project Structure
-perl
+*(Build this using [Excalidraw](https://excalidraw.com/) or [draw.io](https://draw.io). Add the image to the repo once ready.)*
+
+Git Bash (Windows)
+↓ SSH
+AWS EC2 Instance (Ubuntu)
+↓ Apache2
+Static Website (HTML)
+
+yaml
 Copy
 Edit
+
+---
+
+## 🛠️ Technologies Used
+
+- Amazon EC2 (Ubuntu 22.04)
+- Git Bash (Windows Terminal)
+- Apache2 Web Server
+- Bash Scripts (custom setup)
+- Git & GitHub (version control)
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Launch an EC2 Instance
+
+- Region: `us-east-2`
+- AMI: Ubuntu Server 22.04
+- Inbound Rule: Allow HTTP (port 80) and SSH (port 22)
+- Key pair: Create or reuse `.pem` file
+
+---
+
+### 2. SSH from Git Bash (on Windows)
+
+```bash
+chmod 400 your-key.pem
+ssh -i "your-key.pem" ubuntu@<EC2-Public-IP>
+3. Install Git and Clone This Repo (on EC2)
+bash
+Copy
+Edit
+sudo apt update
+sudo apt install git -y
+git clone https://github.com/Tommy813-lab/aws-ec2-git-bash-demo.git
+cd aws-ec2-git-bash-demo
+4. Run Bash Scripts
+bash
+Copy
+Edit
+cd scripts
+bash update-ubuntu.sh
+bash apache-install.sh
+5. Deploy Website
+bash
+Copy
+Edit
+sudo mv ../website/index.html /var/www/html/index.html
+6. Verify Website Works
+In your browser, go to:
+👉 http://<EC2-Public-IP>
+
+Or use curl from terminal:
+
+bash
+Copy
+Edit
+curl http://localhost
+📸 Screenshots (Add These!)
+✅ EC2 instance dashboard (proof it's running)
+✅ Git Bash terminal during SSH + script execution
+✅ Browser showing your deployed website
+✅ Curl output showing HTML response
+
+Add images to a /screenshots/ folder and embed here.
+
+📁 Folder Structure
 aws-ec2-git-bash-demo/
 ├── README.md
-├── ec2-instance-setup/
-│   └── connect-ec2.sh         # SSH into EC2 with key
-├── web-server-setup/
-│   ├── install-apache.sh      # Script to install Apache
-│   └── index.html             # Static web page
-├── screenshots/
-│   ├── ec2-launch.png
-│   ├── apache-installed.png
-│   └── website-live.png
-└── notes/
-    └── troubleshooting.md     # Common fixes for issues
-🛠️ Step-by-Step Deployment Guide
-1. Launch EC2 Instance
-Log into AWS Console
-
-Launch a t2.micro instance using Ubuntu 22.04
-
-Create/download a .pem key named my-key
-
-Add inbound rules for:
-
-TCP 22 (SSH)
-
-TCP 80 (HTTP)
-
-2. Connect to EC2 via Git Bash
-bash
-Copy
-Edit
-chmod 400 my-key
-ssh -i my-key ubuntu@ec2-3-140-197-242.us-east-2.compute.amazonaws.com
-3. Install Apache2
-bash
-Copy
-Edit
-cd web-server-setup
-chmod +x install-apache.sh
-./install-apache.sh
-Contents of install-apache.sh:
-
-bash
-Copy
-Edit
-#!/bin/bash
-# Install and start Apache2
-
-sudo apt update -y
-sudo apt install apache2 -y
-sudo systemctl start apache2
-sudo systemctl enable apache2
-
-echo "Apache2 installed and running."
-4. Deploy Your Website
-bash
-Copy
-Edit
-sudo cp index.html /var/www/html/index.html
-5. View in Browser
-Visit:
-
-arduino
-Copy
-Edit
-http://ec2-3-140-197-242.us-east-2.compute.amazonaws.com
-⚙️ Tools & Technologies
-AWS EC2 (Ubuntu 22.04) – Virtual machine hosting the server
-
-Git Bash (Windows) – Terminal for SSH and Bash scripting
-
-Apache2 Web Server – Hosting the static site
-
-Bash scripting – Automates deployment steps
-
-GitHub – Version control and portfolio hosting
-
-🔍 Troubleshooting
-❌ SSH Timeout?
-→ Confirm port 22 is open in EC2 Security Group
-
-❌ Permission Denied (publickey)?
-→ Run: chmod 400 my-key
-
-❌ Site Not Loading?
-→ Check Apache:
-
-bash
-Copy
-Edit
-sudo systemctl status apache2
-sudo systemctl restart apache2
-✅ See detailed notes:
-notes/troubleshooting.md
-
-🚀 AWS EC2 Deployment Using Git Bash
-🧠 Project Overview
-This project shows how to launch an Ubuntu EC2 instance on AWS, connect securely via Git Bash on Windows, and deploy a static website using Apache — all from the command line. It proves basic cloud infrastructure skills with minimal tools.
-
-🚀 What This Project Covers
-✅ EC2 instance creation via AWS Console (t2.micro, Ubuntu 22.04)
-
-✅ Secure SSH connection using .pem key and Git Bash on Windows
-
-✅ Apache2 web server installation via Bash script
-
-✅ Static HTML website deployed to /var/www/html/
-
-✅ Screenshots documenting EC2 launch and website status
-
-✅ Common troubleshooting steps for SSH and Apache
-
-📁 Project Structure
-perl
-Copy
-Edit
-aws-ec2-git-bash-demo/
-├── README.md
-├── ec2-instance-setup/
-│   └── connect-ec2.sh         # SSH into EC2 with key
-├── web-server-setup/
-│   ├── install-apache.sh      # Script to install Apache
-│   └── index.html             # Static web page
-├── screenshots/
-│   ├── ec2-launch.png
-│   ├── apache-installed.png
-│   └── website-live.png
-└── notes/
-    └── troubleshooting.md     # Common fixes for issues
-🛠️ Step-by-Step Deployment Guide
-1. Launch EC2 Instance
-Log into AWS Console
-
-Launch a t2.micro instance using Ubuntu 22.04
-
-Create/download a .pem key named my-key
-
-Add inbound rules for:
-
-TCP 22 (SSH)
-
-TCP 80 (HTTP)
-
-2. Connect to EC2 via Git Bash
-bash
-Copy
-Edit
-chmod 400 my-key
-ssh -i my-key ubuntu@ec2-3-140-197-242.us-east-2.compute.amazonaws.com
-3. Install Apache2
-bash
-Copy
-Edit
-cd web-server-setup
-chmod +x install-apache.sh
-./install-apache.sh
-Contents of install-apache.sh:
-
-bash
-Copy
-Edit
-#!/bin/bash
-# Install and start Apache2
-
-sudo apt update -y
-sudo apt install apache2 -y
-sudo systemctl start apache2
-sudo systemctl enable apache2
-
-echo "Apache2 installed and running."
-4. Deploy Your Website
-bash
-Copy
-Edit
-sudo cp index.html /var/www/html/index.html
-5. View in Browser
-Visit:
-
-arduino
-Copy
-Edit
-http://ec2-3-140-197-242.us-east-2.compute.amazonaws.com
-⚙️ Tools & Technologies
-AWS EC2 (Ubuntu 22.04) – Virtual machine hosting the server
-
-Git Bash (Windows) – Terminal for SSH and Bash scripting
-
-Apache2 Web Server – Hosting the static site
-
-Bash scripting – Automates deployment steps
-
-GitHub – Version control and portfolio hosting
-
-🔍 Troubleshooting
-❌ SSH Timeout?
-→ Confirm port 22 is open in EC2 Security Group
-
-❌ Permission Denied (publickey)?
-→ Run: chmod 400 my-key
-
-❌ Site Not Loading?
-→ Check Apache:
-
-bash
-Copy
-Edit
-sudo systemctl status apache2
-sudo systemctl restart apache2
-✅ See detailed notes:
-notes/troubleshooting.md
-
+├── scripts/
+│   ├── apache-install.sh
+│   └── update-ubuntu.sh
+├── website/
+│   └── index.html
+└── screenshots/  (optional)
+✍️ Author
+Charles “Tommy813-lab” Bucher
+Cloud Engineer in training – GitHub
 
