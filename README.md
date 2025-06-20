@@ -1,21 +1,12 @@
 # AWS EC2 Git Bash Demo
 
-This project demonstrates how to launch and configure an Ubuntu EC2 instance on AWS, connect to it using Git Bash on Windows, and deploy a basic static website hosted by Apache — all using terminal commands and custom Bash scripts.
-
----
-
-## 📦 What This Project Proves
-
-- ✅ You understand real-world cloud workflows  
-- ✅ You can automate EC2 setup and Linux provisioning  
-- ✅ You use Git, GitHub, Bash, and AWS together  
-- ✅ You can work solo with public cloud tools (no drag-and-drop BS)  
+This project demonstrates how to launch and configure an Ubuntu EC2 instance on AWS, connect to it using Git Bash on Windows, and deploy a basic static website hosted by Apache — all using terminal commands   
 
 ---
 
 ## 🧱 Architecture Diagram
 
-*(Build this using [Excalidraw](https://excalidraw.com/) or [draw.io](https://draw.io). Add the image to the repo once ready.)*
+*(Build this using [Excalidraw](https://excalidraw.com/) or [draw.io](https://draw.io). 
 
 Git Bash (Windows)
 ↓ SSH
