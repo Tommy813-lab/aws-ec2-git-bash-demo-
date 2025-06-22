@@ -1,0 +1,74 @@
+📄 scripts/deploy.sh
+bash
+Copy
+Edit
+#!/bin/bash
+
+# ===============================
+# VARIABLES
+# ===============================
+REPO_URL="https://github.com/Tommy813-lab/aws-ec2-git-bash-demo-.git"
+APP_DIR="aws-ec2-git-bash-demo-"
+LOG_FILE="/var/log/deploy.log"
+
+# ===============================
+# LOG START
+# ===============================
+echo "[$(date)] Starting deployment..." | tee -a $LOG_FILE
+
+# ===============================
+# SYSTEM UPDATE & INSTALLS
+# ===============================
+echo "Updating system and installing Git + Python3..." | tee -a $LOG_FILE
+sudo yum update -y >> $LOG_FILE 2>&1
+sudo yum install -y git python3 >> $LOG_FILE 2>&1
+
+# ===============================
+# CLONE OR PULL LATEST REPO
+# ===============================
+if [ -d "$APP_DIR" ]; then
+  echo "Repo exists. Pulling latest changes..." | tee -a $LOG_FILE
+  cd $APP_DIR && git pull >> $LOG_FILE 2>&1
+else
+  echo "Cloning repo..." | tee -a $LOG_FILE
+  git clone $REPO_URL >> $LOG_FILE 2>&1
+  cd $APP_DIR
+fi
+
+# ===============================
+# START SIMPLE WEB SERVER
+# ===============================
+echo "Starting Python HTTP server on port 80..." | tee -a $LOG_FILE
+sudo nohup python3 -m http.server 80 > /dev/null 2>&1 &
+
+# ===============================
+# DONE
+# ===============================
+echo "[$(date)] Deployment completed." | tee -a $LOG_FILE
+🧾 Usage Instructions
+SSH into your EC2 instance:
+
+bash
+Copy
+Edit
+ssh -i your-key.pem ec2-user@your-public-ip
+Run:
+
+bash
+Copy
+Edit
+chmod +x scripts/deploy.sh
+./scripts/deploy.sh
+Open your browser and go to:
+
+cpp
+Copy
+Edit
+http://<your-ec2-public-ip>
+You should see an index of files — this proves the Bash script successfully cloned the repo and launched the HTTP server.
+
+
+
+
+
+
