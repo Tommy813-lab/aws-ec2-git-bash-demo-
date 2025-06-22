@@ -1,0 +1,33 @@
+# === Terraform ===
+*.tfstate
+*.tfstate.backup
+.terraform/
+crash.log
+terraform.tfvars
+*.tfvars.json
+
+# === AWS CLI Credentials ===
+*.pem
+*.key
+.aws/
+*.env
+
+# === System Files ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === Shell History ===
+.bash_history
+.zsh_history
+
+# === VS Code Settings ===
+.vscode/
+*.code-workspace
+
+# === Temporary Files ===
+*.swp
+*.bak
+*.tmp
