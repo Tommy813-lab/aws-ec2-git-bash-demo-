@@ -1,116 +1,135 @@
-🧪 AWS EC2 Git + Bash Demo
-This is a hands-on project that demonstrates how to:
+# AWS EC2 Git & Bash Demo
 
-✅ Launch an EC2 instance
-✅ SSH into the instance using your key pair
-✅ Install Git and Bash tools
-✅ Clone a GitHub repo
-✅ Run automated Bash commands (e.g., start a web service)
+## Project Purpose
 
-This project shows off foundational cloud engineering, Linux CLI, and developer operations — ideal for junior cloud or infra ops roles.
+This project demonstrates how to automate the provisioning and setup of an AWS EC2 instance using Bash scripts and Git. It covers launching an EC2 instance, installing Git and Bash tools, and automating code deployment — all foundational skills for cloud infrastructure and DevOps roles.
 
-🚀 What You’ll Learn
-🔑 How to securely SSH into EC2 with a .pem key
+### Why It Matters
 
-📦 How to install Git and Bash on an Amazon Linux 2 EC2 instance
+Mastering EC2 instance management, CLI automation, and version-controlled deployments is critical for junior cloud engineers and system administrators. This repo proves you can:
 
-🧰 How to use Git to clone your project repo from GitHub
+- Provision infrastructure manually or with Terraform
+- Automate environment setup using Bash scripting
+- Use Git for code deployment and version control
+- Lay groundwork for more advanced CI/CD and cloud automation
 
-⚙️ How to run Bash scripts to install packages or configure your app
+---
 
-🛠️ Optional: Use user_data for automatic provisioning
+## Architecture Overview
 
-📁 Project Structure
+```mermaid
+flowchart LR
+    A[Terraform / AWS CLI] --> B[EC2 Instance]
+    B --> C[Bash Setup Scripts]
+    B --> D[Git Clone & Deploy Code]
+    C --> E[Install Git & Bash Tools]
+    D --> F[Run Application / Scripts]
+Terraform/AWS CLI provisions the EC2 instance.
+
+Bash scripts run on the EC2 instance to install Git, Bash tools, and pull project code from GitHub.
+
+This automates setup and deployment to get your environment ready quickly.
+
+Step-by-Step Setup Instructions
+Prerequisites
+AWS account with appropriate permissions.
+
+AWS CLI installed and configured (aws configure).
+
+Terraform installed (if using Terraform to provision EC2).
+
+Git installed locally.
+
+Basic knowledge of terminal commands.
+
+1. Provision EC2 Instance
+You have two options:
+
+Option A: Manual EC2 Provisioning
+Log in to AWS Console.
+
+Navigate to EC2 > Launch Instance.
+
+Select Amazon Linux 2 AMI.
+
+Choose instance type (e.g., t2.micro).
+
+Configure security group: allow SSH (port 22) from your IP.
+
+Launch instance and download key pair (.pem file).
+
+Option B: Automated Provisioning with Terraform (recommended)
+Navigate to the terraform/ directory.
+
+Update variables in variables.tf or create terraform.tfvars.
+
+Run:
+
 bash
 Copy
 Edit
-aws-ec2-git-bash-demo-/
-│
-├── README.md             # This file
-├── scripts/
-│   ├── setup.sh          # Installs Git + system updates
-│   └── deploy.sh         # (Optional) Clone + run project
-└── terraform/ (optional)
-    ├── main.tf           # If used, spins up EC2 infra
-    ├── variables.tf
-    └── outputs.tf
-⚙️ How to Use
-✅ Step 1 – Launch EC2
-You can launch manually in AWS Console or with Terraform.
+terraform init
+terraform apply
+Terraform will create an EC2 instance with the configured settings.
 
-AMI: Amazon Linux 2
-
-Instance type: t2.micro
-
-Inbound rules: allow SSH (22) and HTTP (80)
-
-Key pair: create/download a .pem file
-
-✅ Step 2 – SSH Into Instance
+2. Connect to Your EC2 Instance
 bash
 Copy
 Edit
-chmod 400 my-key.pem
-ssh -i "my-key.pem" ec2-user@<your-ec2-public-ip>
-✅ Step 3 – Install Git + Bash Tools
-You can run the setup manually or with the script:
+chmod 400 your-key.pem
+ssh -i your-key.pem ec2-user@<EC2_PUBLIC_IP>
+3. Run Setup Bash Script on EC2
+Clone this repo on your EC2 instance:
 
-bash
-Copy
-Edit
-# Manual
-sudo yum update -y
-sudo yum install git -y
-
-# Or use the script
-bash scripts/setup.sh
-✅ Step 4 – Clone Your Repo
 bash
 Copy
 Edit
 git clone https://github.com/Tommy813-lab/aws-ec2-git-bash-demo-.git
 cd aws-ec2-git-bash-demo-
-✅ Step 5 – Run a Bash Script (Optional)
-bash
-Copy
-Edit
-bash scripts/deploy.sh
-This can:
-
-Pull updates
-
-Start a simple web server
-
-Run a Node/Python app
-
-Print log info
-
-🧠 Why This Project Matters
-Skill Proved	Description
-Linux CLI	Navigating and working inside a remote server
-SSH & Security	Key-based secure access to AWS infrastructure
-Git Integration	Real-world code deployment on cloud infrastructure
-Scripting	Automating common tasks with Bash
-
-💻 Example Use Cases
-Devs pushing code to test servers
-
-Cloud engineers provisioning and bootstrapping EC2s
-
-Interview take-home or demo projects
-
-Training lab for Git, Bash, and EC2 skills
-
-🧼 Cleanup
-If launched manually, terminate the EC2 from the AWS Console.
-If using Terraform:
+chmod +x setup.sh deploy.sh
+Run the setup script to install Git, Bash tools, and dependencies:
 
 bash
 Copy
 Edit
-cd terraform
-terraform destroy -auto-approve
-🧔 Built By
-Charles Bucher (aka Tommy813)
-🚀 Cloud career transitioner | Git & Terraform addict
-📍 GitHub
+./setup.sh
+Then run the deployment script to pull latest code or run your automation:
+
+bash
+Copy
+Edit
+./deploy.sh
+4. Verify Deployment
+Check the status of your setup:
+
+Confirm Git is installed: git --version
+
+Confirm your app or script is running (depending on your deploy.sh content).
+
+Check logs if applicable (deploy.log or custom logs).
+
+Optional: Automate EC2 User Data
+You can embed your Bash setup commands in EC2 user data to run on instance launch, avoiding manual SSH and script execution.
+
+Troubleshooting & Tips
+Make sure your security group allows SSH access from your IP.
+
+If ssh fails, verify the instance is running and you’re using the correct public IP.
+
+For permission errors, ensure .pem file has correct permissions (chmod 400).
+
+Review logs for script errors and fix accordingly.
+
+Contact
+Questions? Reach out:
+Charles T Bucher (Tommy813-lab)
+📧 buchercharles2@gmail.com
+GitHub Profile
+
+This repo is a foundational building block toward becoming a proficient cloud engineer focused on automation, infrastructure, and scalable deployments.
+
+yaml
+Copy
+Edit
+
+---
