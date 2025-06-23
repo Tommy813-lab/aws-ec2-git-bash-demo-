@@ -1,135 +1,110 @@
-# AWS EC2 Git & Bash Demo
+# AWS EC2 Provisioning & Automation with Bash and Git
 
-## Project Purpose
+## 📦 Project Overview
+This project demonstrates how to automate the provisioning of an **AWS EC2 instance** and deploy code using **Bash scripts** and **Git**. It showcases foundational skills needed for cloud infrastructure, DevOps, and remote system administration roles.
 
-This project demonstrates how to automate the provisioning and setup of an AWS EC2 instance using Bash scripts and Git. It covers launching an EC2 instance, installing Git and Bash tools, and automating code deployment — all foundational skills for cloud infrastructure and DevOps roles.
-
-### Why It Matters
-
-Mastering EC2 instance management, CLI automation, and version-controlled deployments is critical for junior cloud engineers and system administrators. This repo proves you can:
-
-- Provision infrastructure manually or with Terraform
-- Automate environment setup using Bash scripting
-- Use Git for code deployment and version control
-- Lay groundwork for more advanced CI/CD and cloud automation
+By the end, you'll have:
+✅ An EC2 instance automatically launched and configured  
+✅ Git installed and project code deployed to the server  
+✅ Bash scripts to automate repetitive setup tasks  
 
 ---
 
-## Architecture Overview
-
-```mermaid
-flowchart LR
-    A[Terraform / AWS CLI] --> B[EC2 Instance]
-    B --> C[Bash Setup Scripts]
-    B --> D[Git Clone & Deploy Code]
-    C --> E[Install Git & Bash Tools]
-    D --> F[Run Application / Scripts]
-Terraform/AWS CLI provisions the EC2 instance.
-
-Bash scripts run on the EC2 instance to install Git, Bash tools, and pull project code from GitHub.
-
-This automates setup and deployment to get your environment ready quickly.
-
-Step-by-Step Setup Instructions
-Prerequisites
-AWS account with appropriate permissions.
-
-AWS CLI installed and configured (aws configure).
-
-Terraform installed (if using Terraform to provision EC2).
-
-Git installed locally.
-
-Basic knowledge of terminal commands.
-
-1. Provision EC2 Instance
-You have two options:
-
-Option A: Manual EC2 Provisioning
-Log in to AWS Console.
-
-Navigate to EC2 > Launch Instance.
-
-Select Amazon Linux 2 AMI.
-
-Choose instance type (e.g., t2.micro).
-
-Configure security group: allow SSH (port 22) from your IP.
-
-Launch instance and download key pair (.pem file).
-
-Option B: Automated Provisioning with Terraform (recommended)
-Navigate to the terraform/ directory.
-
-Update variables in variables.tf or create terraform.tfvars.
-
-Run:
-
-bash
-Copy
-Edit
-terraform init
-terraform apply
-Terraform will create an EC2 instance with the configured settings.
-
-2. Connect to Your EC2 Instance
-bash
-Copy
-Edit
-chmod 400 your-key.pem
-ssh -i your-key.pem ec2-user@<EC2_PUBLIC_IP>
-3. Run Setup Bash Script on EC2
-Clone this repo on your EC2 instance:
-
-bash
-Copy
-Edit
-git clone https://github.com/Tommy813-lab/aws-ec2-git-bash-demo-.git
-cd aws-ec2-git-bash-demo-
-chmod +x setup.sh deploy.sh
-Run the setup script to install Git, Bash tools, and dependencies:
-
-bash
-Copy
-Edit
-./setup.sh
-Then run the deployment script to pull latest code or run your automation:
-
-bash
-Copy
-Edit
-./deploy.sh
-4. Verify Deployment
-Check the status of your setup:
-
-Confirm Git is installed: git --version
-
-Confirm your app or script is running (depending on your deploy.sh content).
-
-Check logs if applicable (deploy.log or custom logs).
-
-Optional: Automate EC2 User Data
-You can embed your Bash setup commands in EC2 user data to run on instance launch, avoiding manual SSH and script execution.
-
-Troubleshooting & Tips
-Make sure your security group allows SSH access from your IP.
-
-If ssh fails, verify the instance is running and you’re using the correct public IP.
-
-For permission errors, ensure .pem file has correct permissions (chmod 400).
-
-Review logs for script errors and fix accordingly.
-
-Contact
-Questions? Reach out:
-Charles T Bucher (Tommy813-lab)
-📧 buchercharles2@gmail.com
-GitHub Profile
-
-This repo is a foundational building block toward becoming a proficient cloud engineer focused on automation, infrastructure, and scalable deployments.
-
-yaml
-Copy
-Edit
+## 🏗️ Architecture Diagram
+```plaintext
+┌─────────────────────┐         ┌───────────────────┐
+│      User (You)     │  SSH    │   EC2 Instance    │
+└─────────────────────┘ <────── └───────────────────┘
+                                │  Bash Automation  │
+                                │  Git Project Code │
+                                └───────────────────┘
+```
 
 ---
+
+## ☁️ Tech Stack
+- **AWS EC2** — Virtual server provisioning
+- **Bash Scripting** — Infrastructure automation
+- **Git** — Code version control and deployment
+
+---
+
+## 🚀 Features
+✅ Automated EC2 provisioning  
+✅ Bash scripts for server configuration  
+✅ Git setup and code pull from repository  
+✅ Hands-on intro to real-world infrastructure automation  
+
+---
+
+## 📂 Project Structure
+```plaintext
+.
+├── provision.sh        # Bash script to launch EC2 and configure instance
+├── setup.sh            # Bash script to install tools inside EC2
+├── deploy.sh           # Script to pull Git repo code to EC2
+└── README.md           # Project documentation
+```
+
+---
+
+## 🔧 Step-by-Step Usage
+### **1. Prerequisites**
+- AWS account with proper permissions
+- AWS CLI configured locally (`aws configure`)
+- Existing SSH key pair for EC2 access
+- GitHub repository URL for deployment
+
+### **2. Launch EC2 & Configure with Bash**
+```bash
+bash provision.sh
+```
+- Creates an EC2 instance (default region: `us-east-1`)
+- Waits for instance to be ready
+- Connects via SSH and runs `setup.sh`
+
+### **3. Deploy Code with Git**
+```bash
+bash deploy.sh
+```
+- SSH into EC2
+- Clones your specified Git repository
+- Application or code is ready on the server
+
+---
+
+## 🌐 Example Output
+After running the scripts, your EC2 instance will:
+✅ Be provisioned and accessible via SSH  
+✅ Have Git installed  
+✅ Contain your project code from GitHub  
+
+---
+
+## 📌 Real-World Relevance
+These are baseline skills for:
+- Cloud infrastructure engineers
+- DevOps automation roles
+- Remote Linux system administration
+- Entry-level cloud support positions
+
+Recruiters and hiring managers value candidates who can demonstrate practical automation workflows like this.
+
+---
+
+## 🛡️ Security Notes
+- SSH key authentication is used for secure access
+- Security groups should be locked down to trusted IPs only
+- Never hard-code sensitive credentials in scripts
+
+---
+
+## 🎯 Future Improvements
+- Add Terraform to automate instance provisioning entirely
+- GitHub Actions workflow for automated end-to-end deployment
+- Harden instance with security configurations
+
+---
+
+## 🙌 Credits
+Built by [Charles Bucher](https://github.com/Tommy813-lab) as part of cloud infrastructure and automation learning.
